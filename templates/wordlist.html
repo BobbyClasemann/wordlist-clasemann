@@ -1,13 +1,8 @@
-<html>
-	<head>
-	</head>
-		<link rel="stylesheet" href="/static/wordstyle.css">
-	<body>
-		<h1>Word List for {{ name }}</h1>
-		<main>
-			{% for word in wordlist: %}
-				<div class="wordbox">{{ word }}</div>
-			{% endfor %}
-		</main>
-	</body>
-</html>
+{% extends "base.html" %}
+<main>
+	{% block content %}
+	{% for word in wordlist: %}
+	<div class="wordbox">{{ word }}</div>
+	{% endfor %}
+	{% endblock %}
+</main>
