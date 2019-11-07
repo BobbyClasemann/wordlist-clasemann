@@ -7,9 +7,13 @@ from wtforms import StringField, SubmitField, SelectField, validators
 import re
 
 class WordForm(FlaskForm):
-	avail_letters = StringField("Letters")  #This is the label, validators like Required, optional, can make your own
+	def validate_letters(form, field):
+		if (len(field.data) == 0):
+			raise ValidationError(message)
+
+	avail_letters = StringField("Letters", validators=[validators.Optional()])  #This is the label, validators like Required, optional, can make your own
 	num_letters = SelectField('Length of words', choices=[("Default", "Select"), ("3","3"), ("4", "4"), ("5", "5"), ('6', "6"), ('7', "7"), ('8', "8"), ('9', "9"), ('10', "10")])
-	pattern_letters = StringField('Pattern', [validators.Regexp(regex="[A-Za-z_.-]")])
+	pattern_letters = StringField('Pattern', [validators.Regexp(regex="[A-Za-z_.-]"), validators.Optional()])
 	submit = SubmitField("Go")
 
 
@@ -37,22 +41,32 @@ def letters_2_words():
 		good_words = set(x.strip().lower() for x in f.readlines())
 
 	word_set = set()
-	isMatch = True
-	if (wordLength == "Default"):
-		for l in range(1, len(letters)):
-			for word in itertools.permutations(letters,l):
+	if (len(letters) > 0):
+		if (wordLength == "Default"):
+			for l in range(1, len(letters)):
+				for word in itertools.permutations(letters,l):
+					isMatch = True
+					w = "".join(word)
+					if (len(pattern) != 0):
+						isMatch = (re.match(pattern, w) and len(w) == len(pattern))
+					if w in good_words and isMatch:
+						word_set.add(w)
+		else:
+			for word in itertools.permutations(letters, int(wordLength)):
 				w = "".join(word)
 				if (len(pattern) != 0):
-					isMatch = re.match(pattern, w)
+					isMatch = (re.match(pattern, w) and len(w) == len(pattern))
 				if w in good_words and isMatch:
 					word_set.add(w)
+
 	else:
-		for word in itertools.permutations(letters, int(wordLength)):
+		for word in itertools.permutations("abcdefghijklmnopqrstuvwxyz", len(pattern)):
+			isMatch = True
 			w = "".join(word)
-			if (len(pattern) != 0):
-				isMatch = re.match(pattern, w)
+			isMatch = re.match(pattern, w)
 			if w in good_words and isMatch:
 				word_set.add(w)
+
 
 	word_set_alpha = sorted(word_set, key=str.lower)
 	return render_template('wordlist.html',
