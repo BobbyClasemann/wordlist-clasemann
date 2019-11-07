@@ -3,10 +3,13 @@ import requests
 import itertools
 from flask_wtf.csrf import CSRFProtect
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, SelectField, validators
+import re
 
 class WordForm(FlaskForm):
 	avail_letters = StringField("Letters")  #This is the label, validators like Required, optional, can make your own
+	num_letters = SelectField('Length of words', choices=[("Default", "Select"), ("3","3"), ("4", "4"), ("5", "5"), ('6', "6"), ('7', "7"), ('8', "8"), ('9', "9"), ('10', "10")])
+	pattern_letters = StringField('Pattern', [validators.Regexp(regex="[A-Za-z_.-]")])
 	submit = SubmitField("Go")
 
 
@@ -26,20 +29,34 @@ def letters_2_words():
 	form = WordForm()
 	if form.validate_on_submit():
 		letters = form.avail_letters.data
+		wordLength = form.num_letters.data
+		pattern = form.pattern_letters.data
 	else:
 		return render_template("index.html", form=form)
 	with open('sowpods.txt') as f:
 		good_words = set(x.strip().lower() for x in f.readlines())
 
 	word_set = set()
-	for l in range(3,len(letters)+1):
-		for word in itertools.permutations(letters,l):
+	isMatch = True
+	if (wordLength == "Default"):
+		for l in range(1, len(letters)):
+			for word in itertools.permutations(letters,l):
+				w = "".join(word)
+				if (len(pattern) != 0):
+					isMatch = re.match(pattern, w)
+				if w in good_words and isMatch:
+					word_set.add(w)
+	else:
+		for word in itertools.permutations(letters, int(wordLength)):
 			w = "".join(word)
-			if w in good_words:
+			if (len(pattern) != 0):
+				isMatch = re.match(pattern, w)
+			if w in good_words and isMatch:
 				word_set.add(w)
 
+	word_set_alpha = sorted(word_set, key=str.lower)
 	return render_template('wordlist.html',
-		wordlist=sorted(word_set, key=len),
+		wordlist=sorted(word_set_alpha, key=len),
 		name="CS4131")
 
 @app.route('/proxy')
