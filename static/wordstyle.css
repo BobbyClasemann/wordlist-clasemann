@@ -21,3 +21,11 @@ main {
 .title {
 	text-align: center;
 }
+
+.nowords {
+	font-size: 30pt;
+	color: black;
+	text-align: auto;
+	text-align: center;
+	grid-template-columns: 0fr;
+}

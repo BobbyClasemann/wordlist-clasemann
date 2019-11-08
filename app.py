@@ -15,7 +15,7 @@ class WordForm(FlaskForm):
 	avail_letters = StringField("Letters", validators=[validators.Regexp(regex="[A-Za-z_]"), validators.Optional()])  #This is the label, validators like Required, optional, can make your own
 	num_letters = SelectField('Length of words', choices=[("Default", "Select"), ("3","3"), ("4", "4"), ("5", "5"), ('6', "6"), ('7', "7"), ('8', "8"), ('9', "9"), ('10', "10")])
 	pattern_letters = StringField('Pattern', validators=[validators.Regexp(regex="[A-Za-z_.-]", flags=0, message="Input can be letters or periods"), validators.Optional()])
-	submit = SubmitField("Go")
+	submit = SubmitField("Submit")
 
 
 csrf = CSRFProtect()
@@ -72,8 +72,7 @@ def letters_2_words():
 
 	word_set_alpha = sorted(word_set, key=str.lower)
 	return render_template('wordlist.html',
-		wordlist=sorted(word_set_alpha, key=len),
-		row = [0, 1, 2, 3, 4])
+		wordlist=sorted(word_set_alpha, key=len))
 
 @app.route('/proxy/<word>')
 def proxy(word):

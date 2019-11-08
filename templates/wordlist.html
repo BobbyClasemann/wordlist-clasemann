@@ -18,8 +18,12 @@
 	  </div>
 	</div>
 	<div id="wordsmain">
+		{% if wordlist|length %}
 		{% for word in wordlist: %}
 		<div class="wordbox" onclick="postWord(this)" data-toggle="modal" data-target="#exampleModalCenter">{{ word }}</div>
 		{% endfor %}
+		{% else %}
+			<div class="nowords">No words found</div>
+		{% endif %}
 	</div>
 	{% endblock %}
