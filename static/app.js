@@ -35,35 +35,18 @@ function postWord(word) {
 }
 
 function callbackFunc(json) {
-	$('#definition').empty();
-	var $modalfade = $('<div>', { 'class': 'modal fade', 'id': 'modalCenter', 'tabindex': "-1", 'role': 'dialog', 'aria-lebelledby': 'modalCenterTitle', 'aria-hidden': 'true'});
-	var $modaldialog = $('<div>', { 'class': 'modal-dialog modal-dialog-centered', 'role': 'document' });
-	var $modalcontent = $('<div>', { 'class': 'modal-content' });
 
-	var $modalheader = $('<div>', { 'class': 'modal-header' });
-	var $modaltitle = $('<h5>', { 'class': 'modal-title' });
-	$($modaltitle).append(`${json[0].hwi.hw} definition`);
-	var $closemodal = $('<button>', { 'type': 'button', 'class': 'close', 'data-dismiss': 'modal', 'aria-label': 'Close'});
-	var $span = $('<span>', { 'aria-hidden': 'true' });
-	$($span).append('&times;');
-	$($modalheader).append($modaltitle);
-	$($modalheader).append($closemodal);
-	$($closemodal).append($span);
+	$('.modal-title').empty();
+	$('.modal-body').empty();
+	if (typeof json[0].hwi === "undefined") {
+		$('.modal-title').append('Word not found.')
+	} else {
+		$('.modal-title').append(`${json[0].hwi.hw} definition`);
+	}
 
-	var $modalbody = $('<div>', { 'class': 'modal-body' });
 	for (var i = 0; i < json.length; i++) {
 		var $defin = $('<div>', { 'class': 'sub-definition' });
 		$($defin).append(`${i+1}: ${json[i].shortdef[0]}`);
-		$($modalbody).append($defin);
+		$('.modal-body').append($defin);
 	}
-
-	var $modalfooter = $('<div>', { 'class': 'modal-footer' });
-	var $closebutton = $('<button>', { 'type': 'button', 'class': 'btn btn-secondary', 'data-dismiss': 'modal'});
-	$($closebutton).append('Close');
-
-	$($modalcontent).append($modalheader);
-	$($modalcontent).append($modalbody);
-	$($modalcontent).append($modalfooter);
-
-	$('#definition').append($modalcontent);
 }

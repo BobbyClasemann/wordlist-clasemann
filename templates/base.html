@@ -5,16 +5,19 @@
 		<meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	<body>
-		{% block navbar %}
-		<nav>
-			<h1>Word List Program for {{ name }}</h1>
-		</nav>
-		{% endblock %}
-		{% block content %}
-		default content
-		{% endblock %}
-	</body>
+    <main>
+		<body>
+			{% block navbar %}
+			<div class="title">
+				<h2>Word List</h2>
+			</div>
+			{% endblock %}
+			{% block content %}
+			default content
+			{% endblock %}
+		</body>
+	</main>
 	<script type="text/javascript" src="/static/app.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </html>

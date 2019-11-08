@@ -1,9 +1,15 @@
 main {
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	background-color: grey;
+	margin-left: auto;
+	margin-right: auto;
+	width: 60%;
+	font-style: bold;
+	font-family: Helvetica, sans-serif;
 }
 
 .wordbox {
+	text-align: center;
+}
+
+.title {
 	text-align: center;
 }
