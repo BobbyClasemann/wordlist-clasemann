@@ -74,10 +74,11 @@ def letters_2_words():
 		wordlist=sorted(word_set_alpha, key=len),
 		name="CS4131")
 
-@app.route('/proxy')
-def proxy():
+@app.route('/proxy/<word>')
+def proxy(word):
+	print(word)
 	#result = requests.get(request.args['https://dictionaryapi.com/api/v3/references/collegiate/json/voluminous?key=d1055154-10f5-41ed-a300-beb207ed7018'])
-	result = requests.get('https://dictionaryapi.com/api/v3/references/collegiate/json/voluminous?key=d1055154-10f5-41ed-a300-beb207ed7018')
+	result = requests.get(f'https://dictionaryapi.com/api/v3/references/collegiate/json/{word}?key=d1055154-10f5-41ed-a300-beb207ed7018')
 	resp = Response(result.text)
 	print(resp)
 	resp.headers['Content-Type'] = 'application/json'

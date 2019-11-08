@@ -18,29 +18,10 @@ function checkFields() {
 	return isvalid;
 }
 
-function getWordData() {
-
-	fetch('/proxy')
-    .then(function (response) {
-        return response.json(); // But parse it as JSON this time
-    })
-    .then(function (json) {
-        console.log('GET response as JSON:');
-        console.log(json); // Here’s our JSON object
-    })
-	/*$.ajax({
-		type: "POST"
-		url: "../app.py",
-		data: { param: word },
-		success: callbackFunc
-	}).done(function(response) {
-		$('#definition').empty();
-		$('#definition').append(response.def);
-	}); */
-}
-
 function postWord(word) {
-	fetch('/proxy')
+	console.log(word);
+	console.log(word.innerHTML);
+	fetch(`/proxy/${word.innerHTML}`)
 	.then(function(response) {
      	return response.json();
   })
@@ -55,10 +36,14 @@ function postWord(word) {
 
 function callbackFunc(json) {
 	$('#definition').empty();
-	for (var i = 0; i < json[0].shortdef.length; i++) {
-		var $defin = $('<div>', { 'class': 'sub-definintion' });
-		$($defin).append(`${i+1}: ${json[0].shortdef[i]}`);
-		$('#definition').append($defin)
+	for (var i = 0; i < json.length; i++) {
+		var $wordversion = $('<div>', { 'class': 'word-version' });
+		for (var j = 0; j < json[i].shortdef.length; j++) {
+			var $defin = $('<div>', { 'class': 'sub-definition' });
+			$($defin).append(`${i+1}: ${json[i].shortdef[j]}`);
+			$($wordversion).append($defin);
+		}
+		$('#definition').append($wordversion);
 	}
 
 }
