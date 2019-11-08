@@ -5,6 +5,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, validators
 import re
+import json
 
 class WordForm(FlaskForm):
 	def validate_letters(form, field):
@@ -75,8 +76,10 @@ def letters_2_words():
 
 @app.route('/proxy')
 def proxy():
-	result = requests.get(request.args['url'])
+	#result = requests.get(request.args['https://dictionaryapi.com/api/v3/references/collegiate/json/voluminous?key=d1055154-10f5-41ed-a300-beb207ed7018'])
+	result = requests.get('https://dictionaryapi.com/api/v3/references/collegiate/json/voluminous?key=d1055154-10f5-41ed-a300-beb207ed7018')
 	resp = Response(result.text)
+	print(resp)
 	resp.headers['Content-Type'] = 'application/json'
 	return resp
 

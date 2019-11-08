@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 <main>
+
 	{% block content %}
+	<div id="definition">Default</div>
 	{% for word in wordlist: %}
-	<div class="wordbox">{{ word }}</div>
+	<div class="wordbox" onclick="postWord(this)">{{ word }}</div>
 	{% endfor %}
 	{% endblock %}
 </main>

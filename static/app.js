@@ -18,3 +18,47 @@ function checkFields() {
 	return isvalid;
 }
 
+function getWordData() {
+
+	fetch('/proxy')
+    .then(function (response) {
+        return response.json(); // But parse it as JSON this time
+    })
+    .then(function (json) {
+        console.log('GET response as JSON:');
+        console.log(json); // Here’s our JSON object
+    })
+	/*$.ajax({
+		type: "POST"
+		url: "../app.py",
+		data: { param: word },
+		success: callbackFunc
+	}).done(function(response) {
+		$('#definition').empty();
+		$('#definition').append(response.def);
+	}); */
+}
+
+function postWord(word) {
+	fetch('/proxy')
+	.then(function(response) {
+     	return response.json();
+  })
+  	.then(function(json) {
+  		console.log('Request successful', json);
+  		callbackFunc(json);
+  })
+  	.catch(function(error) {
+    	console.log('Request failed', error)
+  });
+}
+
+function callbackFunc(json) {
+	$('#definition').empty();
+	for (var i = 0; i < json[0].shortdef.length; i++) {
+		var $defin = $('<div>', { 'class': 'sub-definintion' });
+		$($defin).append(`${i+1}: ${json[0].shortdef[i]}`);
+		$('#definition').append($defin)
+	}
+
+}
