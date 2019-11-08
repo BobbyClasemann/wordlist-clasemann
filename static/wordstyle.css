@@ -6,8 +6,16 @@ main {
 	font-family: Helvetica, sans-serif;
 }
 
+#wordsmain {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    background-color: white;
+}
+
 .wordbox {
 	text-align: center;
+	border: solid black;
+	margin: 3px;
 }
 
 .title {

@@ -72,7 +72,8 @@ def letters_2_words():
 
 	word_set_alpha = sorted(word_set, key=str.lower)
 	return render_template('wordlist.html',
-		wordlist=sorted(word_set_alpha, key=len))
+		wordlist=sorted(word_set_alpha, key=len),
+		row = [0, 1, 2, 3, 4])
 
 @app.route('/proxy/<word>')
 def proxy(word):
