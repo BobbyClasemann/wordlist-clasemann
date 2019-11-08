@@ -62,7 +62,7 @@ def letters_2_words():
 					word_set.add(w)
 
 	else:
-		for word in itertools.permutations("abcdefghijklmnopqrstuvwxyz", len(pattern)):
+		for word in itertools.product("abcdefghijklmnopqrstuvwxyz", repeat=len(pattern)):
 			isMatch = True
 			w = "".join(word)
 			isMatch = re.match(pattern, w)
