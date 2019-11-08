@@ -12,9 +12,9 @@ class WordForm(FlaskForm):
 		if (len(field.data) == 0):
 			raise ValidationError(message)
 
-	avail_letters = StringField("Letters", validators=[validators.Optional()])  #This is the label, validators like Required, optional, can make your own
+	avail_letters = StringField("Letters", validators=[validators.Regexp(regex="[A-Za-z_]"), validators.Optional()])  #This is the label, validators like Required, optional, can make your own
 	num_letters = SelectField('Length of words', choices=[("Default", "Select"), ("3","3"), ("4", "4"), ("5", "5"), ('6', "6"), ('7', "7"), ('8', "8"), ('9', "9"), ('10', "10")])
-	pattern_letters = StringField('Pattern', [validators.Regexp(regex="[A-Za-z_.-]"), validators.Optional()])
+	pattern_letters = StringField('Pattern', validators=[validators.Regexp(regex="[A-Za-z_.-]", flags=0, message="Input can be letters or periods"), validators.Optional()])
 	submit = SubmitField("Go")
 
 
@@ -33,7 +33,7 @@ def letters_2_words():
 
 	form = WordForm()
 	if form.validate_on_submit():
-		letters = form.avail_letters.data
+		letters = form.avail_letters.data.lower()
 		wordLength = form.num_letters.data
 		pattern = form.pattern_letters.data
 	else:
@@ -54,6 +54,7 @@ def letters_2_words():
 						word_set.add(w)
 		else:
 			for word in itertools.permutations(letters, int(wordLength)):
+				isMatch = True
 				w = "".join(word)
 				if (len(pattern) != 0):
 					isMatch = (re.match(pattern, w) and len(w) == len(pattern))
