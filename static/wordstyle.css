@@ -18,14 +18,22 @@ main {
 	margin: 3px;
 }
 
+.wordbox:hover {
+	background-color: #4BE5FD;
+}
+
 .title {
 	text-align: center;
 }
 
 .nowords {
-	font-size: 30pt;
+	font-size: 20pt;
 	color: black;
-	text-align: auto;
 	text-align: center;
 	grid-template-columns: 0fr;
+}
+
+footer {
+	text-align: center;
+	margin: auto;
 }

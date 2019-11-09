@@ -23,6 +23,8 @@
 		<div class="wordbox" onclick="postWord(this)" data-toggle="modal" data-target="#exampleModalCenter">{{ word }}</div>
 		{% endfor %}
 		{% else %}
+			<div class="nowords"></div>
+			<div class="nowords">Error: </div>
 			<div class="nowords">No words found</div>
 		{% endif %}
 	</div>
