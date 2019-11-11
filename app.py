@@ -12,9 +12,9 @@ class WordForm(FlaskForm):
 		if (len(field.data) == 0):
 			raise ValidationError(message)
 
-	avail_letters = StringField("Letters", validators=[validators.Regexp(r"[A-Za-z]", message="Must contain letters only."), validators.Optional()])  #This is the label, validators like Required, optional, can make your own
-	num_letters = SelectField('Length of words', choices=[("Default", "Select"), ("3","3"), ("4", "4"), ("5", "5"), ('6', "6"), ('7', "7"), ('8', "8"), ('9', "9"), ('10', "10")])
-	pattern_letters = StringField('Pattern', validators=[validators.Regexp(r"[A-Za-z_.-]", flags=0, message="Input must be letters or periods"), validators.Optional()])
+	avail_letters = StringField("Letters", validators=[validators.Regexp(r"[A-Za-z]", message="Must contain letters only."), validators.Optional()], render_kw={'class': 'form-control'})  #This is the label, validators like Required, optional, can make your own
+	num_letters = SelectField('Length of words', choices=[("Default", "Select"), ("3","3"), ("4", "4"), ("5", "5"), ('6', "6"), ('7', "7"), ('8', "8"), ('9', "9"), ('10', "10")], render_kw={'class': 'form-control'})
+	pattern_letters = StringField('Pattern', validators=[validators.Regexp(r"[A-Za-z_.-]", flags=0, message="Input must be letters or periods."), validators.Optional()], render_kw={'class': 'form-control'})
 	submit = SubmitField("Submit")
 
 
@@ -35,7 +35,7 @@ def letters_2_words():
 	if form.validate_on_submit():
 		letters = form.avail_letters.data.lower()
 		wordLength = form.num_letters.data
-		pattern = form.pattern_letters.data
+		pattern = form.pattern_letters.data.lower()
 	else:
 		return render_template("index.html", form=form)
 	with open('sowpods.txt') as f:
@@ -44,7 +44,7 @@ def letters_2_words():
 	word_set = set()
 	if (len(letters) > 0):
 		if (wordLength == "Default"):
-			for l in range(1, len(letters)):
+			for l in range(1, len(letters)+1):
 				for word in itertools.permutations(letters,l):
 					isMatch = True
 					w = "".join(word)

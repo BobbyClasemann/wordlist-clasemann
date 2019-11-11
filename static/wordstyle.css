@@ -28,9 +28,14 @@ main {
 
 .nowords {
 	font-size: 20pt;
-	color: black;
+	color: red;
 	text-align: center;
 	grid-template-columns: 0fr;
+}
+
+.error {
+	color: red;
+	display: none;
 }
 
 footer {

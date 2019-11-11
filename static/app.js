@@ -4,7 +4,6 @@ function checkFields() {
 	var word_length = document.querySelector('#num_letters').value;
 	var isvalid = true;
 
-
 	if (letters.length == 0 && pattern.length == 0) {
 		alert("Must either fill Letters or Pattern field.");
 		isvalid = false;
@@ -17,6 +16,38 @@ function checkFields() {
 
 	return isvalid;
 }
+
+document.getElementById('avail_letters').oninput = function() {
+	var letters_error = document.querySelector('#letters_error');
+	var letters = document.querySelector('#avail_letters').value;
+	var letters_regex = /^[A-Za-z]+$/;
+
+	if (letters.match(letters_regex) == null) {
+		letters_error.style.display = "block";
+		return false;
+	} else {
+		letters_error.style.display = "none";
+	}
+
+	return true;
+
+}
+
+document.getElementById('pattern_letters').oninput = function() {
+	var pattern_error = document.querySelector('#pattern_error');
+	var pattern = document.querySelector('#pattern_letters').value;
+	var pattern_regex = /^[A-Za-z_.-]+$/;
+
+	if (pattern.match(pattern_regex) == null) {
+		pattern_error.style.display = "block";
+		return false;
+	} else {
+		pattern_error.style.display = "none";
+	}
+
+	return true;
+}
+
 
 function postWord(word) {
 	console.log(word);
