@@ -12,9 +12,9 @@ class WordForm(FlaskForm):
 		if (len(field.data) == 0):
 			raise ValidationError(message)
 
-	avail_letters = StringField("Letters", validators=[validators.Regexp(regex="[A-Za-z_]"), validators.Optional()])  #This is the label, validators like Required, optional, can make your own
+	avail_letters = StringField("Letters", validators=[validators.Regexp(r"[A-Za-z]", message="Must contain letters only."), validators.Optional()])  #This is the label, validators like Required, optional, can make your own
 	num_letters = SelectField('Length of words', choices=[("Default", "Select"), ("3","3"), ("4", "4"), ("5", "5"), ('6', "6"), ('7', "7"), ('8', "8"), ('9', "9"), ('10', "10")])
-	pattern_letters = StringField('Pattern', validators=[validators.Regexp(regex="[A-Za-z_.-]", flags=0, message="Input can be letters or periods"), validators.Optional()])
+	pattern_letters = StringField('Pattern', validators=[validators.Regexp(r"[A-Za-z_.-]", flags=0, message="Input must be letters or periods"), validators.Optional()])
 	submit = SubmitField("Submit")
 
 
