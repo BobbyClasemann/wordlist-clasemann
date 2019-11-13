@@ -20,7 +20,7 @@ function checkFields() {
 document.getElementById('avail_letters').oninput = function() {
 	var letters_error = document.querySelector('#letters_error');
 	var letters = document.querySelector('#avail_letters').value;
-	var letters_regex = /^[A-Za-z]+$/;
+	var letters_regex = /^$|[A-Za-z]+$/;
 
 	if (letters.match(letters_regex) == null) {
 		letters_error.style.display = "block";
@@ -36,7 +36,7 @@ document.getElementById('avail_letters').oninput = function() {
 document.getElementById('pattern_letters').oninput = function() {
 	var pattern_error = document.querySelector('#pattern_error');
 	var pattern = document.querySelector('#pattern_letters').value;
-	var pattern_regex = /^[A-Za-z_.-]+$/;
+	var pattern_regex = /^$|[A-Za-z_.-]+$/;
 
 	if (pattern.match(pattern_regex) == null) {
 		pattern_error.style.display = "block";
