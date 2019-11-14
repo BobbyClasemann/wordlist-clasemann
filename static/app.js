@@ -36,7 +36,7 @@ document.getElementById('avail_letters').oninput = function() {
 document.getElementById('pattern_letters').oninput = function() {
 	var pattern_error = document.querySelector('#pattern_error');
 	var pattern = document.querySelector('#pattern_letters').value;
-	var pattern_regex = /^$|[A-Za-z_.-]+$/;
+	var pattern_regex = /^$|[A-Za-z.]+$/;
 
 	if (pattern.match(pattern_regex) == null) {
 		pattern_error.style.display = "block";
