@@ -20,9 +20,9 @@ function checkFields() {
 document.getElementById('avail_letters').oninput = function() {
 	var letters_error = document.querySelector('#letters_error');
 	var letters = document.querySelector('#avail_letters').value;
-	var letters_regex = /^$|[A-Za-z]+$/;
+	var letters_regex = new RegEx("^$|[A-Za-z]+$");
 
-	if (letters.match(letters_regex) == null) {
+	if (!letters_regex.test(letters)) {
 		letters_error.style.display = "block";
 		return false;
 	} else {
